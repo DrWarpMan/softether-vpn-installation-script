@@ -1,5 +1,6 @@
 # softether-vpn-installation-script
 Simple SoftEther VPN installation script for Debian-based systems
+This script is made for myself, if you don't know how to use it and what it does, don't use it.
 
 *NOTE: This script is only working with root!*
 

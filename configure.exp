@@ -1,0 +1,66 @@
+#!/usr/bin/expect -f
+
+set force_conservative 0  ;# set to 1 to force conservative mode even if
+			  ;# script wasn't run conservatively originally
+if {$force_conservative} {
+	set send_slow {1 .1}
+	proc send {ignore arg} {
+		sleep .1
+		exp_send -s -- $arg
+	}
+}
+
+set username [lindex $argv 0];
+set password [lindex $argv 1];
+
+set timeout -1
+spawn /usr/local/vpnserver/vpncmd
+match_max 100000
+expect "*Select 1, 2 or 3:*"
+send -- "1\r"
+expect "*Hostname of IP Address of Destination:*"
+send -- "\r"
+expect "*Specify Virtual Hub Name:*"
+send -- "\r"
+expect "*VPN Server>*"
+send -- "ServerPasswordSet\r"
+expect "*Password:*"
+send -- "$password\r"
+expect "*Confirm input:*"
+send -- "$password\r"
+expect "*The command completed successfully.*"
+send -- "HubCreate VPN\r"
+expect "*Password:*"
+send -- "$password\r"
+expect "*Confirm input:*"
+send -- "$password\r"
+expect "*The command completed successfully.*"
+send -- "Hub VPN\r"
+expect "*The command completed successfully.*"
+send -- "SecureNatEnable\r"
+expect "*The command completed successfully.*"
+send -- "IPsecEnable\r"
+expect "*Enable L2TP over IPsec Server Function (yes / no):*"
+send -- "yes\r"
+expect "*Enable Raw L2TP Server Function (yes / no):*"
+send -- "no\r"
+expect "*Enable EtherIP / L2TPv3 over IPsec Server Function (yes / no):*"
+send -- "no\r"
+expect "*Pre Shared Key for IPsec (Recommended: 9 letters at maximum):*"
+send -- "quickvpn\r"
+expect "*Default Virtual HUB in a case of omitting the HUB on the Username:*"
+send -- "VPN\r"
+expect "*The command completed successfully.*"
+send -- "Hub VPN\r"
+expect "*The command completed successfully.*"
+send -- "UserCreate $username\r"
+send -- "\r\r\r"
+expect "*The command completed successfully.*"
+send -- "UserPasswordSet $username\r"
+expect "*Password:*"
+send -- "$password\r"
+expect "*Confirm input:*"
+send -- "$password\r"
+expect "*The command completed successfully.*"
+send -- "exit\r"
+expect eof

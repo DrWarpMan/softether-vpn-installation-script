@@ -1,8 +1,8 @@
 # softether-vpn-installation-script
-Simple SoftEther VPN installation script for Debian-based systems
-This script is made for myself, if you don't know how to use it and what it does, don't use it.
+Simple SoftEther VPN installation script for Debian-based systems.
+I made this script for myself, I bear no responsibility for any damage it may cause to your system, if you don't know how to use it, then don't.
 
-*NOTE: This script is only working with root!*
+***NOTE:** This script is only working with root!*
 
 ## Guide
 1. `apt update -y && apt upgrade -y`
@@ -11,8 +11,11 @@ This script is made for myself, if you don't know how to use it and what it does
 4. Clone: `git clone https://github.com/DrWarpMan/softether-vpn-installation-script.git`
 5. Cd into the directory: `cd softether-vpn-installation-script`
 6. Setup permissions: `chmod +x ./install.sh`
-7. Run: `./install.sh`
-8. If everything goes well, the script will give you credentials at the end of the execution.
+7. Run: `./install.sh` and put in your credentials or just press ENTER to generate them for you
+
+If the installation was successful, you can use the credentials the script gave you to login.
+VPN server is set to be automatically started at boot, and also is automatically running after the script finishes.
+
 
 These commands are to be used with Oracle Cloud VPS:
 ```

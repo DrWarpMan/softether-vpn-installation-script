@@ -1,9 +1,54 @@
 #!/bin/bash
 
-NAME="admin"
-PASSWORD=$(pwgen 8 1)
-
 echo "SoftEther VPN installation script, made by DrWarpMan@gmail.com"
+echo ""
+echo "Input your desired global password (default: random)"
+read GLOBAL_PASSWORD
+
+echo "Input the new Hub name (default: VPN)"
+read HUB_NAME
+
+if [[ -z "$HUB_NAME" ]]; then
+    HUB_NAME="VPN"
+fi
+
+echo "Input the Hub ($HUB_NAME) password (default: random)"
+read HUB_PASSWORD
+
+ACCOUNT_NAME="admin"
+echo "Input your Hub ($HUB_NAME) admin account password (default: random)"
+read ACCOUNT_PASSWORD
+
+echo "Input your VPN pre-shared key (default: quickvpn)"
+read KEY
+
+
+if [[ -z "$GLOBAL_PASSWORD" ]]; then
+    GLOBAL_PASSWORD=$(pwgen 8 1)
+fi
+
+if [[ -z "$HUB_PASSWORD" ]]; then
+    HUB_PASSWORD=$(pwgen 8 1)
+fi
+
+if [[ -z "$ACCOUNT_PASSWORD" ]]; then
+    ACCOUNT_PASSWORD=$(pwgen 8 1)
+fi
+
+if [[ -z "$KEY" ]]; then
+    KEY="quickvpn"
+fi
+
+echo "Global password: $GLOBAL_PASSWORD"
+echo "Created Hub: $HUB_NAME"
+echo "Hub Password: $HUB_PASSWORD"
+echo "Hub Account Login: $ACCOUNT_NAME"
+echo "Hub Account Password: $ACCOUNT_PASSWORD"
+echo "Key: $KEY"
+
+echo "Ready. Script starts now.."
+
+echo ""
 
 echo "Getting script path.."
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )

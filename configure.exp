@@ -10,8 +10,12 @@ if {$force_conservative} {
 	}
 }
 
-set username [lindex $argv 0];
-set password [lindex $argv 1];
+set global_password [lindex $argv 0];
+set hub_name [lindex $argv 1];
+set hub_password [lindex $argv 2];
+set account_name [lindex $argv 3];
+set account_password [lindex $argv 4];
+set key [lindex $argv 5];
 
 set timeout -1
 spawn /usr/local/vpnserver/vpncmd
@@ -25,17 +29,17 @@ send -- "\r"
 expect "*VPN Server>*"
 send -- "ServerPasswordSet\r"
 expect "*Password:*"
-send -- "$password\r"
+send -- "$global_password\r"
 expect "*Confirm input:*"
-send -- "$password\r"
+send -- "$global_password\r"
 expect "*The command completed successfully.*"
-send -- "HubCreate VPN\r"
+send -- "HubCreate $hub_name\r"
 expect "*Password:*"
-send -- "$password\r"
+send -- "$hub_password\r"
 expect "*Confirm input:*"
-send -- "$password\r"
+send -- "$hub_password\r"
 expect "*The command completed successfully.*"
-send -- "Hub VPN\r"
+send -- "Hub $hub_name\r"
 expect "*The command completed successfully.*"
 send -- "SecureNatEnable\r"
 expect "*The command completed successfully.*"
@@ -47,20 +51,20 @@ send -- "no\r"
 expect "*Enable EtherIP / L2TPv3 over IPsec Server Function (yes / no):*"
 send -- "no\r"
 expect "*Pre Shared Key for IPsec (Recommended: 9 letters at maximum):*"
-send -- "quickvpn\r"
+send -- "$key\r"
 expect "*Default Virtual HUB in a case of omitting the HUB on the Username:*"
-send -- "VPN\r"
+send -- "$hub_name\r"
 expect "*The command completed successfully.*"
-send -- "Hub VPN\r"
+send -- "Hub $hub_name\r"
 expect "*The command completed successfully.*"
-send -- "UserCreate $username\r"
+send -- "UserCreate $account_name\r"
 send -- "\r\r\r"
 expect "*The command completed successfully.*"
-send -- "UserPasswordSet $username\r"
+send -- "UserPasswordSet $account_name\r"
 expect "*Password:*"
-send -- "$password\r"
+send -- "$account_password\r"
 expect "*Confirm input:*"
-send -- "$password\r"
+send -- "$account_password\r"
 expect "*The command completed successfully.*"
 send -- "exit\r"
 expect eof

@@ -39,13 +39,6 @@ if [[ -z "$KEY" ]]; then
     KEY="quickvpn"
 fi
 
-echo "Global password: $GLOBAL_PASSWORD"
-echo "Created Hub: $HUB_NAME"
-echo "Hub Password: $HUB_PASSWORD"
-echo "Hub Account Login: $ACCOUNT_NAME"
-echo "Hub Account Password: $ACCOUNT_PASSWORD"
-echo "Key: $KEY"
-
 echo "Ready. Script starts now.."
 
 echo ""
@@ -101,7 +94,15 @@ echo "Configuring vpnserver.."
 
 sleep 5
 
-expect $SCRIPT_DIR/configure.exp $NAME $PASSWORD
+expect $SCRIPT_DIR/configure.exp $GLOBAL_PASSWORD $HUB_NAME $HUB_PASSWORD $ACCOUNT_NAME $ACCOUNT_PASSWORD $KEY
 
-echo "Done, if everything went correctly, credentials are:"
-echo "HUB: VPN, USERNAME: $NAME, PASSWORD: $PASSWORD"
+echo "Script finished."
+
+echo ""
+
+echo "Global password: $GLOBAL_PASSWORD"
+echo "Created Hub: $HUB_NAME"
+echo "Hub Password: $HUB_PASSWORD"
+echo "Hub Account Login: $ACCOUNT_NAME"
+echo "Hub Account Password: $ACCOUNT_PASSWORD"
+echo "Key: $KEY"

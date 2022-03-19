@@ -53,7 +53,7 @@ rm /lib/systemd/system/vpnserver.service
 rm -rf /usr/local/vpnserver
 
 echo "Downloading SoftEther VPN source.."
-git clone https://github.com/SoftEtherVPN/SoftEtherVPN_Stable.git
+git clone https://github.com/SoftEtherVPN/SoftEtherVPN_Stable.git $SCRIPT_DIR/SoftEtherVPN_Stable
 
 echo "Configuring build.."
 (cd $SCRIPT_DIR/SoftEtherVPN_Stable/ && ./configure)
